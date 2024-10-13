@@ -13,9 +13,11 @@ app.use(cors());
 
 // import routes
 const userRouter = require("./routes/users");
+const productsRouter = require("./routes/products");
 
 //Router Middleware
 app.use("/users", userRouter);
+app.use("/products",productsRouter)
 
 app.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
