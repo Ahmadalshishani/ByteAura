@@ -28,72 +28,98 @@ const insertProduct = (req, res) => {
 // get all products for main page
 
 const getAllProducts = (req, res) => {
-    pool
-      .query(`SELECT * FROM products WHERE is_deleted=0;`)
-      .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: "All products",
-          result: result.rows,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          success: false,
-          message: "Server error",
-          err: err,
-        });
+  pool
+    .query(`SELECT * FROM products WHERE is_deleted=0;`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "All products",
+        result: result.rows,
       });
-  };
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
 
-  // get products by category id
+// get products by category id
 
 const getProductsByCategoryId = (req, res) => {
-    const categoryId = req.params.id;
-    console.log(req.params.id);
-  
-    pool
-      .query(`SELECT * FROM products WHERE category_id=${categoryId} AND is_deleted=0 `)
-      .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: "All products in the category",
-          result: result.rows,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          success: false,
-          message: "Server error",
-          err: err,
-        });
-      });
-  };
+  const categoryId = req.params.id;
+  console.log(req.params.id);
 
-  // update products by admin
-const updateProduct = (req, res) => {
-    const productId = req.params.id;
-    const { title, description, price } = req.body;
-    console.log(title);
-    console.log(productId);
-    pool
-      .query(
-        `UPDATE products SET title = COALESCE($1,title), description = COALESCE($2, description),price=COALESCE($3,price) WHERE id = $4 RETURNING *;`,
-        [title, description, price, productId]
-      )
-      .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: "producte have been updated",
-          result: result.rows,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          success: false,
-          message: "Server error",
-          err: err,
-        });
+  pool
+    .query(
+      `SELECT * FROM products WHERE category_id=${categoryId} AND is_deleted=0 `
+    )
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "All products in the category",
+        result: result.rows,
       });
-  };
-  
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+
+// update products by admin
+const updateProduct = (req, res) => {
+  const productId = req.params.id;
+  const { title, description, price } = req.body;
+  console.log(title);
+  console.log(productId);
+  pool
+    .query(
+      `UPDATE products SET title = COALESCE($1,title), description = COALESCE($2, description),price=COALESCE($3,price) WHERE id = $4 RETURNING *;`,
+      [title, description, price, productId]
+    )
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "producte have been updated",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+
+//Delete product by admin
+
+const deleteProduct = (req, res) => {
+  const productId = req.params.id;
+  pool
+    .query(`UPDATE products SET is_deleted=1 WHERE id=$1 RETURNING *`, [
+      productId,
+    ])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "producte have been deleted",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+      console.log(err);
+    });
+};
