@@ -123,3 +123,26 @@ const deleteProduct = (req, res) => {
       console.log(err);
     });
 };
+
+//get product by id
+const getProductById = (req, res) => {
+    const productId = req.params.id;
+    console.log(req.params.id);
+  
+    pool
+      .query(`SELECT * FROM products WHERE id=${productId}`)
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: `products with id:${productId}`,
+          result: result.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Server error",
+          err: err,
+        });
+      });
+  };
