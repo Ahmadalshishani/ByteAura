@@ -45,3 +45,27 @@ const getAllProducts = (req, res) => {
         });
       });
   };
+
+  // get products by category id
+
+const getProductsByCategoryId = (req, res) => {
+    const categoryId = req.params.id;
+    console.log(req.params.id);
+  
+    pool
+      .query(`SELECT * FROM products WHERE category_id=${categoryId} AND is_deleted=0 `)
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "All products in the category",
+          result: result.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Server error",
+          err: err,
+        });
+      });
+  };
