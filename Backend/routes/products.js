@@ -8,12 +8,12 @@ const authorization = require("../middlewares/authorization");
 const productsRouter = express.Router();
 
 // Import products controllers
-productsRouter.post("/",authentication,authorization("CREATE_PRODUCTS"), insertProduct);
+productsRouter.post("/",authentication,authorization("admin"), insertProduct);
 productsRouter.get("/",getAllProducts)
 productsRouter.get("/product/:id",getProductById)
 productsRouter.get("/:id",getProductsByCategoryId)
-productsRouter.put("/:id",authentication,authorization("CREATE_PRODUCTS"),updateProduct)
-productsRouter.delete("/:id",authentication,authorization("CREATE_PRODUCTS"),deleteProduct)
+productsRouter.put("/:id",authentication,authorization("admin"),updateProduct)
+productsRouter.delete("/:id",authentication,authorization("admin"),deleteProduct)
 
 // export to app.js
 module.exports = productsRouter;
