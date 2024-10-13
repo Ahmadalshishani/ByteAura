@@ -56,7 +56,7 @@ const register = (req, res) => {
 // login api
 const login = (req, res) => {
   const { username, password } = req.body;
-//! check if the user exist or not
+  //! check if the user exist or not
 
   pool
     .query("SELECT * FROM users WHERE username = LOWER($1)", [username])
@@ -67,8 +67,8 @@ const login = (req, res) => {
           message: "The username dosen't exist or the password is inncorrect",
         });
       }
-      //! compare the password with the hashed password 
-      
+      //! compare the password with the hashed password
+
       try {
         const valid = await bcrypt.compare(password, result.rows[0].password);
         if (!valid) {
@@ -78,7 +78,7 @@ const login = (req, res) => {
           });
         }
 
-        // insert the wanted data to the token 
+        // insert the wanted data to the token
         const payload = {
           userId: result.rows[0].id,
           role: result.rows[0].role_id,
@@ -109,9 +109,9 @@ const login = (req, res) => {
       });
     });
 };
- 
+
 //! exporte the api to the route wanted
-module.exports={
-    register,
-    login
-}
+module.exports = {
+  register,
+  login,
+};

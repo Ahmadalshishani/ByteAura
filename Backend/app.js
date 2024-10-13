@@ -11,6 +11,12 @@ require("./models/db");
 app.use(express.json());
 app.use(cors());
 
+// import routes
+const userRouter = require("./routes/users");
+
+//Router Middleware
+app.use("/users", userRouter);
+
 app.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
 });
