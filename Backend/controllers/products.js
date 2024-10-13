@@ -149,7 +149,7 @@ const getProductById = (req, res) => {
 
 //! exporte the api to the route wanted
 module.exports = {
-  createProduct,
+  insertProduct,
   getAllProducts,
   getProductsByCategoryId,
   updateProduct,

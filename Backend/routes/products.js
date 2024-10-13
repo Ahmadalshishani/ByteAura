@@ -1,5 +1,5 @@
 const express = require("express");
-const { createProduct, getAllProducts, getProductsByCategoryId, updateProduct, deleteProduct,getProductById } = require("../controllers/products");
+const { insertProduct, getAllProducts, getProductsByCategoryId, updateProduct, deleteProduct,getProductById } = require("../controllers/products");
 
 //authentication and authorization
 const authentication = require("../middlewares/authentication");
@@ -8,7 +8,7 @@ const authorization = require("../middlewares/authorization");
 const productsRouter = express.Router();
 
 // Import products controllers
-productsRouter.post("/",authentication,authorization("CREATE_PRODUCTS"), createProduct);
+productsRouter.post("/",authentication,authorization("CREATE_PRODUCTS"), insertProduct);
 productsRouter.get("/",getAllProducts)
 productsRouter.get("/product/:id",getProductById)
 productsRouter.get("/:id",getProductsByCategoryId)
