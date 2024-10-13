@@ -26,6 +26,7 @@ DROP TABLE categorys;
 CREATE TABLE categorys
 (
     id SERIAL NOT NULL,
+    image VARCHAR (5000),
     title VARCHAR (255) UNIQUE,
     is_deleted SMALLINT DEFAULT 0,
     PRIMARY KEY (id)
