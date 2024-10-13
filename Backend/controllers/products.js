@@ -126,23 +126,33 @@ const deleteProduct = (req, res) => {
 
 //get product by id
 const getProductById = (req, res) => {
-    const productId = req.params.id;
-    console.log(req.params.id);
-  
-    pool
-      .query(`SELECT * FROM products WHERE id=${productId}`)
-      .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: `products with id:${productId}`,
-          result: result.rows,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          success: false,
-          message: "Server error",
-          err: err,
-        });
+  const productId = req.params.id;
+  console.log(req.params.id);
+
+  pool
+    .query(`SELECT * FROM products WHERE id=${productId}`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `products with id:${productId}`,
+        result: result.rows,
       });
-  };
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+
+//! exporte the api to the route wanted
+module.exports = {
+  createProduct,
+  getAllProducts,
+  getProductsByCategoryId,
+  updateProduct,
+  deleteProduct,
+  getProductById,
+};
