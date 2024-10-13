@@ -72,3 +72,11 @@ const deleteCategory = (req, res) => {
         console.log(err);
       });
   };
+
+
+  //! exporte the api to the route wanted
+  module.exports = {
+    createNewCategory,
+    getAllCategories,
+    deleteCategory
+  }
