@@ -47,3 +47,28 @@ const createNewCategory = (req, res) => {
       });
   };
   
+
+  //Delete catergory by admin
+
+const deleteCategory = (req, res) => {
+    const categoryId = req.params.id;
+    pool
+      .query(`UPDATE categorys SET is_deleted=1 WHERE id=$1 RETURNING *`, [
+        categoryId,
+      ])
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "category have been deleted",
+          result: result.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Server error",
+          err: err,
+        });
+        console.log(err);
+      });
+  };
