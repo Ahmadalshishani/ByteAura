@@ -1,10 +1,10 @@
-const express = require("express");
+const express =require("express")
 const cors = require("cors");
 
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 require("./models/db");
 
 //! built in middleware

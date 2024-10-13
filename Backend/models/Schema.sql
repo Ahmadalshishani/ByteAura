@@ -1,4 +1,4 @@
-DROP TABLE role;
+DROP TABLE roles;
 
 CREATE TABLE roles
 (
@@ -12,8 +12,8 @@ DROP TABLE users;
 CREATE TABLE users
 (
     id SERIAL NOT NULL,
-    username VARCHAR (50) UNIQUE,
-    password VARCHAR (50) NOT NULL,
+    username VARCHAR (255) UNIQUE,
+    password VARCHAR (255) NOT NULL,
     role_id INT,
     is_deleted SMALLINT DEFAULT 0,
     FOREIGN KEY (role_id) REFERENCES roles(id),
@@ -26,7 +26,7 @@ DROP TABLE categorys;
 CREATE TABLE categorys
 (
     id SERIAL NOT NULL,
-    title VARCHAR (50) UNIQUE,
+    title VARCHAR (255) UNIQUE,
     is_deleted SMALLINT DEFAULT 0,
     PRIMARY KEY (id)
 
